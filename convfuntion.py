@@ -81,12 +81,12 @@ def psf2otf(psf,outSize):
     if np.max(np.abs(np.imag(otf))) / np.max(np.abs(otf)) <= nOps * np.finfo(np.float32).eps:
         otf = np.real(otf)
     return otf
-def dive(X):
+def dive(X,Y):
     """transpose of the forward finite difference operator"""
     fwd_diff_rowX=np.expand_dims(X[:,-1]-X[:,0],axis=1)
     DtXY=np.concatenate((fwd_diff_rowX,-np.diff(X,1,1)),axis=1)
-    fwd_diff_colX=np.expand_dims(X[-1,:]-X[0,:],axis=0)
-    DtXY=DtXY+np.concatenate((fwd_diff_colX,-np.diff(X,1,0)),axis=0)
+    fwd_diff_colX=np.expand_dims(Y[-1,:]-Y[0,:],axis=0)
+    DtXY=DtXY+np.concatenate((fwd_diff_colX,-np.diff(Y,1,0)),axis=0)
     return DtXY
 
 def getC(image,kernel):

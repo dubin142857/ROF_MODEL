@@ -41,33 +41,43 @@ norm_f=np.linalg.norm(f,'fro')
 d=np.zeros(f.shape)
 D1f,D2f=convfuntion.forward(f)
 d=(D1f+D2f).copy()
-b=np.zeros_like(d)
+Lam1=np.zeros((f_row,f_col))
+Lam2=np.zeros_like(Lam1)
+beta=10
+gamma=1.618
+
 eigsK,KtF,eigsDtD,eigsKtK =convfuntion.getC(f,gauss_kernel)
 abs_error=[]
 rel_error=[]
 psnr=[]
 ssim=[]
+relchg=[]
+u=f
 for k in range(maxiter):
-    
-    u=np.fft.fft2(KtF+mu_weight*convfuntion.dive(d-b))/(eigsKtK+mu_weight*eigsDtD)
+    Z1=D1f+Lam1/beta
+    Z2=D2f+Lam2/beta
+    V=Z1**2+Z2**2
+    V=np.sqrt(V)
+    V[V==0]=1
+    V=np.maximum(V-1/beta,0)/V
+    Y1=Z1*V
+    Y2=Z2*V
+    up=u.copy()
+    u=np.fft.fft2((mu_weight*KtF-convfuntion.dive(Lam1,Lam2))/beta+
+                  convfuntion.dive(Y1, Y2))/((mu_weight/beta)*eigsKtK+eigsDtD)
     u=np.real(np.fft.ifft2(u))
+    relchg.append(np.linalg.norm(u-up,'fro')/np.linalg.norm(u,'fro'))
+    if relchg[-1]<tol:
+        break
     #更新d,b
     diff_u1,diff_u2=convfuntion.forward(u)
-    diff_u=(diff_u1+diff_u2).copy()
-    tao=lambda_weight/mu_weight
-    d=optfuntion.soft_threshold(tao,diff_u+b)
-    wu_d=(diff_u-d).copy()
-    b=b+delta*(wu_d)
-    abs_error.append(np.linalg.norm(wu_d,'fro'))
-    rel_error.append(abs_error[-1]/norm_f)
+    Lam1 = Lam1 - gamma*beta*(Y1 - diff_u1)
+    Lam2 = Lam2 - gamma*beta*(Y2 - diff_u2)
     psnr.append(optfuntion.psnr(u_true,u))
     ssim.append(optfuntion.compare_ssim(u_true,u,ssim_win_size,1))
     if iprint>0 and k%iprint==0:
             print("iteration: {0}".format(k))
-            print("     ||Wu-d||: {:.5e}".format(abs_error[-1]))
             print("         PSNR: {:.3f}".format(psnr[-1]))
-    if rel_error[-1]<tol and abs_error[-1]<1e-2:
-        break
 psnr.append(optfuntion.psnr(u_true,f))
 ssim.append(optfuntion.compare_ssim(u_true,f,ssim_win_size,1))    
 if  output_image == "None":

@@ -13,7 +13,7 @@ def  default_options():
         "--kernel_width":15,
         "--gaussian_sigma":1,
         "--output_image":"None",
-        "--mu_weight":2**5,
+        "--mu_weight":5e4,
         "--delta":1,
         "--noise_level":0.01,
         "--maxiter":300,
