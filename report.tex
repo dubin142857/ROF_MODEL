@@ -1,0 +1,59 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{authblk}
+\usepackage{CJK}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{abstract}
+\usepackage{setspace}
+\usepackage{cite}
+\usepackage{makecell}
+\usepackage{extarrows}
+\usepackage{booktabs}
+\usepackage[version=4]{mhchem}
+\newenvironment{mysubeqn}%
+{\begin{subequations}
+		\renewcommand\theequation{\theparentequation-\roman{equation}}}%
+	{\end{subequations}}	
+
+\begin{document}
+	\title{斑点噪声去噪模型对比}
+	\author[1]{杜斌\thanks{1901210080@pku.edu.cn}}
+	\author[2]{张诚彪}
+	\affil[1，2]{北京大学数学科学学院，北京，100871}
+	\date{}
+	\maketitle
+	\paragraph{摘要}
+	本文研究为对象乘性噪声的经典代表——斑点噪声。我们总结了斑点噪声的产生原因，
+	主流处理方向——变分法和小波方法，对不同方向下经典去噪模型文献进行总结分析，编程实验。
+	最后，我们根据实验结果提出斑点去噪改进建议。
+	\paragraph{关键词}斑点噪声;\quad 变分法;\quad	小波去噪
+	\\ \hspace*{\fill} \\
+	\clearpage
+	\par \begin{center}
+		\textbf{Stochastic Model of Multiscale Michaelis-Menten System}\\
+		\begin{spacing}{2.0}
+			Bin\; $\text{Du}^{\ast 1}$\\
+			Chengbiao\;$\text{Zhang}^{2}$
+		\end{spacing}
+		\emph{1，2\;College of Mathematical Sciences}\\
+		\emph{Peking University, Beijing,100871, P.R.China}\\
+	\end{center}
+	\paragraph{Abstract}We use singularity perturbation analysis technology to reduce the stochastic model of multi-scale Michaelis-Menten system  and generalize the algorithm.We reduce some other chemical systems by our algorithm. At the same time we will introduce the work of Debashis Barik and others on this issue.
+	\hspace*{\fill} 
+	\paragraph{Keywords}Singularity Perturbation Analysis;\quad Multiscale Analysis;\quad Model reduction
+	\clearpage
+	\tableofcontents
+	\clearpage
+	\section{引言}
+	
+	\section{总结}
+	\paragraph{}本文从经典的酶催化反应Michaelis-Menten体系入手，通过回顾分析约化Michaelis-Menten体系的经典QSSA技巧，提出用随机模型研究约化化学方程组思想，并借助奇异性扰动分析技术在快慢两个时间尺度讨论模型约化，并得到sQSPA约化模型。最后我们推广了该算法，并计算了一些其他化学方程组例子，并针对不同条件的Michaelis-Menten随机约化模型与经典QSSA模型进行比较，结果展示经典QSSA约化模型太过粗放，没有考虑$K_{max}$大小情况，因此不如我们的约化模型准确。
+	\paragraph{}同时我们看到了李铁军老师在听我们组报告时候提出的建议，阅读相关文献，总结陈述其中思想。
+	\section{致谢}
+	\paragraph{}首先非常感谢《计算系统生物学》课程李铁军老师，《论文写作指导》课程孙猛、杨凤霞老师。老师们博学多识，精彩讲课让我受益匪浅，另外，我觉得更重要的是老师言传身教，认真备课，用心关心每一个学子的学习，这种态度对我而言是一笔更大的财富！其次我想感谢一下我的父母。在这一个特殊时期，全国战“疫”，我在家学习，离不开他们全力支持。最后，感谢每一个奋斗者，希望我们好好学习，在自己的舞台散发自己的光彩！
+	\bibliographystyle{plain}
+	\bibliography{bib}
+\end{document}
